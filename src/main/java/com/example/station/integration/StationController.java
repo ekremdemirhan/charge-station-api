@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -29,14 +31,19 @@ public class StationController {
     @PostMapping(value = "/chargingSessions")
     public ResponseEntity createSession(@RequestBody InitializedChargeSession initializedSession) {
 
-        //TODO: StartedAt should be before now.
-        //TODO: StationId cannot be empty.
-        if (initializedSession.getStartedAt() == null || initializedSession.getStationId() == null) {
-            return new ResponseEntity<>("A valid stationId and start date should be given ", HttpStatus.BAD_REQUEST);
-        }
-
+        validateNewSession(initializedSession);
         final ChargeSession chargeSession = sessionManagement.addSession(new ChargeSession(initializedSession.getStationId(), initializedSession.getStartedAt()));
         return new ResponseEntity<>(chargeSession, HttpStatus.OK);
+    }
+
+    private void validateNewSession(@RequestBody InitializedChargeSession initializedSession) {
+
+        if (initializedSession.getStartedAt() == null ||
+                initializedSession.getStartedAt().isAfter(LocalDateTime.now()) ||
+                initializedSession.getStationId() == null ||
+                initializedSession.getStationId().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A valid stationId and a start date should be given ");
+        }
     }
 
     @PutMapping(value = "/chargingSessions/{id}")
@@ -44,7 +51,7 @@ public class StationController {
 
         final ChargeSession chargeSession = sessionManagement.updateSession(id);
         if (chargeSession == null) {
-            return new ResponseEntity<>("A valid stationId and start date should be given ", HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "A valid id should be given ");
         }
 
         return new ResponseEntity<>(chargeSession, HttpStatus.OK);

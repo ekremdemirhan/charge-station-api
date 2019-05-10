@@ -33,6 +33,9 @@ public class ChargeSessionManagement implements SessionManagement {
     public ChargeSession updateSession(UUID id) {
 
         final ChargeSession chargeSession = sessionRepository.findById(id);
+        if(chargeSession == null) {
+            return null;
+        }
         chargeSession.finished();
         return sessionRepository.save(chargeSession);
     }
