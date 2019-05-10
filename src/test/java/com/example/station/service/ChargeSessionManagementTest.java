@@ -2,7 +2,6 @@ package com.example.station.service;
 
 import com.example.station.datasource.SessionRepository;
 import com.example.station.model.ChargeSession;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -52,7 +51,7 @@ public class ChargeSessionManagementTest {
     }
 
     @Test
-    public void updateSessionSuccessfully_WhenItsIdGiven() {
+    public void updateSessionSuccessfully_WhenAValidIdGiven() {
 
         final UUID id = UUID.randomUUID();
         final ChargeSession session = new ChargeSession(STATION_ID, LocalDateTime.now());
@@ -64,7 +63,7 @@ public class ChargeSessionManagementTest {
     }
 
     @Test
-    public void updateSessionReturnsNull_WhenNotAValidIdGiven() {
+    public void updateSessionReturnsNull_WhenAnInvalidIdGiven() {
 
         final UUID id = UUID.randomUUID();
         when(sessionRepository.findById(id)).thenReturn(null);

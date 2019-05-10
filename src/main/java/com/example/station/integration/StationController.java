@@ -36,7 +36,7 @@ public class StationController {
         return new ResponseEntity<>(chargeSession, HttpStatus.OK);
     }
 
-    private void validateNewSession(@RequestBody InitializedChargeSession initializedSession) {
+    private void validateNewSession(InitializedChargeSession initializedSession) {
 
         if (initializedSession.getStartedAt() == null ||
                 initializedSession.getStartedAt().isAfter(LocalDateTime.now()) ||

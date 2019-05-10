@@ -20,6 +20,7 @@ public class ChargeSessionManagement implements SessionManagement {
 
     @Autowired
     public ChargeSessionManagement(SessionRepository sessionRepository) {
+
         this.sessionRepository = sessionRepository;
     }
 

@@ -3,8 +3,8 @@ package com.example.station.datasource;
 import com.example.station.model.ChargeSession;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,14 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemorySessionRepository implements SessionRepository {
 
     private ConcurrentHashMap<UUID, ChargeSession> sessionMap = new ConcurrentHashMap<>();
-
-    public void fillMap() {
-
-        for(int i = 0; i < 100; i++) {
-            final ChargeSession chargeSession = new ChargeSession(String.valueOf(new Random().nextInt(11111)), LocalDateTime.now());
-            sessionMap.put(chargeSession.getId(), chargeSession);
-        }
-    }
 
     @Override
     public ChargeSession save(ChargeSession chargeSession) {
