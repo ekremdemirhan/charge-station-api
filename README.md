@@ -1,11 +1,11 @@
-#CHARGE STATION API
+# CHARGE STATION API
 
 This project aims to demonstrate a prototype of electric car charge stations' back-end service. 
 This REST API has three main jobs, basically; creating a new charging session, finishing a charging 
 session and getting all created sessions so far.
     
 
-###PREREQUISITES
+### PREREQUISITES
 
 1) Java 1.8 JDK
 2) Maven 
@@ -15,7 +15,7 @@ session and getting all created sessions so far.
    
 
 
-###HOW TO RUN
+### HOW TO RUN
 
 If everything is ok so far, open a command promt at project root directory;
 1) The project can be run by using `mvn spring-boot:run` or,
